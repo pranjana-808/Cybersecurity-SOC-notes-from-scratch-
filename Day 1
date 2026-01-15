@@ -1,0 +1,43 @@
+# Daily SOC Notes
+
+**Purpose:**  
+Daily hands-on notes for learning SOC (Security Operations Center) and Linux basics for cybersecurity.
+
+---
+
+## Day 1 – Key Learnings
+
+### SOC Basics
+- SOC = 24/7 security monitoring center  
+- SOC Analyst: monitor alerts, analyze logs, investigate incidents  
+- Tools: SIEM (Splunk, Wazuh), firewalls, IDS  
+
+### Linux Basics
+- `pwd` → show current directory  
+- `ls` → list files  
+- `cd` → change directory  
+- `mkdir`, `touch` → create folders/files  
+- `cat`, `less`, `head`, `tail` → read files  
+- `chmod`, `ls -l` → file permissions  
+
+### File Searching
+- `find . -name "*.log"` → find files by extension  
+
+### Grep / Log Analysis
+- `grep "text" file` → search text in file  
+- `grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' auth.log` → find IPs  
+- `grep "Failed password" auth.log` → find failed logins  
+- Combine: `grep "Failed password" auth.log | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}'`  
+
+**SOC Analyst Mindset:**  
+- Who did what?  
+- Where from?  
+- When?  
+- Next action?
+
+---
+
+**Next Step:**  
+- Practice log analysis with simulated logs  
+- Extract IPs and detect threats  
+- Continue daily SOC exercises
