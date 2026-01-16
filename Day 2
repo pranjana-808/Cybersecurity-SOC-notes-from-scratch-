@@ -1,0 +1,54 @@
+🛡️ SOC Day 2 – Practical Logs & Investigation
+
+
+1️⃣ Objective
+Learn to analyze authentication logs.
+Detect brute-force attacks, successful compromise, and privilege escalation.
+Practice hands-on SOC investigation in Termux.
+
+2️⃣ Preparation
+Created practice folder in Termux: mkdir soc-day2 && cd soc-day2
+Created sample auth.log with realistic failed and successful SSH attempts.
+Sample logs used:
+
+Copy code
+Failed password for invalid user admin from 45.83.64.10 ssh2
+Failed password for invalid user root from 45.83.64.10 ssh2
+Failed password for pranjal from 92.18.201.44 ssh2
+Accepted password for pranjal from 92.18.201.44 ssh2
+sudo: pranjal : COMMAND=/bin/bash
+
+3️⃣ Commands Used (SOC Practical)
+View logs: cat auth.log / less auth.log
+
+Search failed logins: grep "Failed password" auth.log
+
+Search successful logins: grep "Accepted password" auth.log
+
+Extract IPs: grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' auth.log
+Count attacks per IP:
+
+Copy code
+grep "Failed password" auth.log | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' | sort | uniq -c | sort -nr
+
+4️⃣ Observations / Analysis
+observe the pattern like : number of attempts, ip, port number, and monitor the security level 24/7
+
+5️⃣ SOC Mindset Learned
+Look for who, what, when, how many in logs.
+Differentiate between attack method vs protocol info.
+
+Classify incidents by severity:
+Successful login + sudo = Critical
+Repeated failures = Medium/High, depending on context
+
+SOC report style language:
+“Multiple failed login attempts indicate SSH brute-force. The presence of multiple external IPs suggests distributed sources. Successful login followed by sudo escalation indicates system compromise (Critical).”
+
+6️⃣ Key Takeaways
+SOC analysis is detective work — logs tell the story.
+ssh2 ≠ attack; failed logins = brute-force attempts.
+Multiple IPs ≠ spoofing; usually bot/proxy.
+Critical incidents = shell access with sudo/root privileges.
+
+Commands like grep, sort, uniq, and regex are essential SOC tools.
